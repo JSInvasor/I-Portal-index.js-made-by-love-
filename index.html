@@ -377,7 +377,8 @@
               <lord-icon
                 src="https://cdn.lordicon.com/rpviwvwn.json"
                 trigger="hover"
-                colors="primary:#121331,secondary:#dc143c"
+                state="hover-rotate"
+                colors="primary:#121331,secondary:#10b981"
                 style="width:16px;height:16px;flex-shrink:0;">
               </lord-icon>
               L7 Methods
@@ -637,6 +638,26 @@
         e.currentTarget.closest('.side-acc').querySelector('.side-acc-head').classList.add('active');
       });
     });
+  })();
+
+  // LORDICON: trigger animation on parent row hover
+  (function(){
+    function bind(){
+      document.querySelectorAll('.nav-item lord-icon, .side-sub-link lord-icon').forEach(icon => {
+        const parent = icon.closest('.nav-item, .side-sub-link');
+        if (!parent || parent.dataset.lordBound) return;
+        parent.dataset.lordBound = '1';
+        parent.addEventListener('mouseenter', () => {
+          const p = icon.playerInstance;
+          if (p) p.playFromBeginning();
+        });
+      });
+    }
+    if (window.customElements) {
+      customElements.whenDefined('lord-icon').then(bind);
+    } else {
+      window.addEventListener('load', bind);
+    }
   })();
 
   // TYPEWRITER EFFECT
