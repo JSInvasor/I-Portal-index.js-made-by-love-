@@ -376,8 +376,6 @@
             <a href="#scripts" class="side-sub-link" data-tab="l7">
               <lord-icon
                 src="https://cdn.lordicon.com/rpviwvwn.json"
-                trigger="hover"
-                state="hover-rotate"
                 colors="primary:#121331,secondary:#10b981"
                 style="width:16px;height:16px;flex-shrink:0;">
               </lord-icon>
@@ -642,21 +640,30 @@
 
   // LORDICON: trigger animation on parent row hover
   (function(){
-    function bind(){
+    function playIcon(icon){
+      const p = icon.playerInstance;
+      if (p && typeof p.playFromBeginning === 'function') { p.playFromBeginning(); return; }
+      if (typeof icon.playFromBeginning === 'function')   { icon.playFromBeginning(); return; }
+      if (p && typeof p.play === 'function')              { p.play(); }
+    }
+    function setup(icon){
+      const parent = icon.closest('.nav-item, .side-sub-link');
+      if (!parent || parent.dataset.lordBound) return;
+      parent.dataset.lordBound = '1';
+      parent.addEventListener('mouseenter', () => playIcon(icon));
+    }
+    function bindAll(){
       document.querySelectorAll('.nav-item lord-icon, .side-sub-link lord-icon').forEach(icon => {
-        const parent = icon.closest('.nav-item, .side-sub-link');
-        if (!parent || parent.dataset.lordBound) return;
-        parent.dataset.lordBound = '1';
-        parent.addEventListener('mouseenter', () => {
-          const p = icon.playerInstance;
-          if (p) p.playFromBeginning();
-        });
+        // bind parent hover immediately
+        setup(icon);
+        // ensure playerInstance is ready
+        icon.addEventListener('ready', () => {}, { once: true });
       });
     }
     if (window.customElements) {
-      customElements.whenDefined('lord-icon').then(bind);
+      customElements.whenDefined('lord-icon').then(bindAll);
     } else {
-      window.addEventListener('load', bind);
+      window.addEventListener('load', bindAll);
     }
   })();
 
