@@ -133,6 +133,33 @@
   .nav-item:hover { color: var(--ink); background: rgba(17,17,17,0.02); }
   .nav-item.active { color: var(--ink); font-weight: 400; }
   .nav-item svg { width: 14px; height: 14px; stroke-width: 1.2; flex-shrink: 0; transition: inherit; }
+
+  /* Animated user-round-plus (Access & Profile) */
+  .ic-user-plus { width: 14px; height: 14px; flex-shrink: 0; overflow: visible; }
+  .ic-user-plus .plus-v,
+  .ic-user-plus .plus-h {
+    stroke-dasharray: 6;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  .nav-item:hover .ic-user-plus .plus-v {
+    animation: ic-plus-v 0.5s ease forwards;
+  }
+  .nav-item:hover .ic-user-plus .plus-h {
+    animation: ic-plus-h 0.8s ease forwards;
+  }
+  @keyframes ic-plus-v {
+    0%   { opacity: 1; stroke-dashoffset: 0; }
+    60%  { opacity: 0; stroke-dashoffset: 6; }
+    80%  { opacity: 1; stroke-dashoffset: 6; }
+    100% { opacity: 1; stroke-dashoffset: 0; }
+  }
+  @keyframes ic-plus-h {
+    0%    { opacity: 1; stroke-dashoffset: 0; }
+    75%   { opacity: 0; stroke-dashoffset: 6; }
+    87.5% { opacity: 1; stroke-dashoffset: 6; }
+    100%  { opacity: 1; stroke-dashoffset: 0; }
+  }
   .nav-item [class*="animated-lucide-"],
   .nav-item :is(animated-lucide-layout-dashboard, animated-lucide-code, animated-lucide-layers, animated-lucide-server, animated-lucide-shield, animated-lucide-user, animated-lucide-book-open) {
     display: inline-flex; flex-shrink: 0; line-height: 0;
@@ -359,8 +386,13 @@
         </div>
       </div>
 
-      <a href="#contact" class="nav-item al-icon-wrapper">
-        <animated-lucide-user size="14" primary-color="#111111" secondary-color="#8b5cf6" stroke-width="1.4"></animated-lucide-user>
+      <a href="#contact" class="nav-item">
+        <svg class="ic-user-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path d="M2 21a8 8 0 0 1 13.292-6"/>
+          <circle cx="10" cy="8" r="5"/>
+          <path class="plus-v" d="M19 16v6"/>
+          <path class="plus-h" d="M22 19h-6"/>
+        </svg>
         Access & Profile
       </a>
       <a href="#faq" class="nav-item al-icon-wrapper">
