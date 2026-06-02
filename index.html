@@ -8,6 +8,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<!-- Animated Lucide Web Components (lucide-animated.com) -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/Search.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/LayoutDashboard.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/Code.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/Layers.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/Server.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/Shield.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/User.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/BookOpen.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@animated-color-icons/lucide-wc/ChevronDown.js"></script>
+
 <style>
   :root {
     --bg: #f4f3ee;
@@ -121,6 +133,15 @@
   .nav-item:hover { color: var(--ink); background: rgba(17,17,17,0.02); }
   .nav-item.active { color: var(--ink); font-weight: 400; }
   .nav-item svg { width: 14px; height: 14px; stroke-width: 1.2; flex-shrink: 0; transition: inherit; }
+  .nav-item [class*="animated-lucide-"],
+  .nav-item :is(animated-lucide-layout-dashboard, animated-lucide-code, animated-lucide-layers, animated-lucide-server, animated-lucide-shield, animated-lucide-user, animated-lucide-book-open) {
+    display: inline-flex; flex-shrink: 0; line-height: 0;
+  }
+  .side-sub-link :is(animated-lucide-layers, animated-lucide-server, animated-lucide-shield),
+  .sidebar-search animated-lucide-search,
+  .side-acc-head .chevron animated-lucide-chevron-down {
+    display: inline-flex; flex-shrink: 0; line-height: 0;
+  }
 
   /* SIDEBAR ACCORDION */
   .side-acc { display: flex; flex-direction: column; }
@@ -301,49 +322,49 @@
       <img src="banner.png" alt="Invasor Network">
     </div>
     
-    <div class="sidebar-search">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <div class="sidebar-search al-icon-wrapper">
+      <animated-lucide-search size="13" primary-color="#8b8a84" secondary-color="#1f6f3a" stroke-width="1.5"></animated-lucide-search>
       <span>Quick search...</span>
       <kbd>Ctrl K</kbd>
     </div>
 
     <div class="nav-label">Core</div>
     <div class="nav-links" id="mainNavLinks">
-      <a href="#" class="nav-item active">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+      <a href="#" class="nav-item al-icon-wrapper active">
+        <animated-lucide-layout-dashboard size="14" primary-color="#111111" secondary-color="#1f6f3a" stroke-width="1.4"></animated-lucide-layout-dashboard>
         Overview
       </a>
-      
+
       <div class="side-acc">
-        <div class="nav-item side-acc-head">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+        <div class="nav-item side-acc-head al-icon-wrapper">
+          <animated-lucide-code size="14" primary-color="#111111" secondary-color="#3b82f6" stroke-width="1.4"></animated-lucide-code>
           Scripts Explorer
-          <span class="chevron"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span>
+          <span class="chevron"><animated-lucide-chevron-down size="12" primary-color="#8b8a84" stroke-width="1.5"></animated-lucide-chevron-down></span>
         </div>
         <div class="side-acc-body">
           <div class="side-acc-inner">
-            <a href="#scripts" class="side-sub-link" data-tab="l7">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg>
+            <a href="#scripts" class="side-sub-link al-icon-wrapper" data-tab="l7">
+              <animated-lucide-layers size="14" primary-color="#111111" secondary-color="#3b82f6" stroke-width="1.4"></animated-lucide-layers>
               L7 Methods
             </a>
-            <a href="#scripts" class="side-sub-link" data-tab="l4">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>
+            <a href="#scripts" class="side-sub-link al-icon-wrapper" data-tab="l4">
+              <animated-lucide-server size="14" primary-color="#111111" secondary-color="#f59e0b" stroke-width="1.4"></animated-lucide-server>
               L4 Methods
             </a>
-            <a href="#scripts" class="side-sub-link" data-tab="bypass">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            <a href="#scripts" class="side-sub-link al-icon-wrapper" data-tab="bypass">
+              <animated-lucide-shield size="14" primary-color="#111111" secondary-color="#1f6f3a" stroke-width="1.4"></animated-lucide-shield>
               UAM Bypass
             </a>
           </div>
         </div>
       </div>
 
-      <a href="#contact" class="nav-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <a href="#contact" class="nav-item al-icon-wrapper">
+        <animated-lucide-user size="14" primary-color="#111111" secondary-color="#8b5cf6" stroke-width="1.4"></animated-lucide-user>
         Access & Profile
       </a>
-      <a href="#faq" class="nav-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 12H3"/><path d="M16 18H3"/><path d="M16 6H3"/><path d="M21 12h.01"/><path d="M21 18h.01"/><path d="M21 6h.01"/></svg>
+      <a href="#faq" class="nav-item al-icon-wrapper">
+        <animated-lucide-book-open size="14" primary-color="#111111" secondary-color="#ef4444" stroke-width="1.4"></animated-lucide-book-open>
         Knowledge Base
       </a>
     </div>
