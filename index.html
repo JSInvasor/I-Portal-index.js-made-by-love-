@@ -288,6 +288,45 @@
   .section-head { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
   .section-head lord-icon { flex-shrink: 0; }
 
+  /* FILTER BAR */
+  .script-filter-bar {
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    margin: 26px 0 0; padding: 12px 14px;
+    background: var(--paper); border: 1px solid var(--hair); border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-search {
+    flex: 1 1 260px; min-width: 220px;
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 12px; background: var(--surface-2);
+    border: 1px solid var(--hair); border-radius: 10px;
+    transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .filter-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .filter-search svg { width: 14px; height: 14px; stroke-width: 1.6; color: var(--muted); flex-shrink: 0; }
+  .filter-search input {
+    flex: 1; border: 0; outline: none; background: transparent;
+    font-family: var(--ui); font-size: 13.5px; font-weight: 400;
+    color: var(--ink); min-width: 0;
+  }
+  .filter-search input::placeholder { color: var(--muted); }
+  .filter-search kbd {
+    font-family: var(--mono); font-size: 9.5px;
+    background: var(--bg-2); padding: 3px 6px; border-radius: 5px;
+    border: 1px solid var(--hair); color: var(--muted);
+  }
+  .filter-group { display: flex; gap: 4px; padding: 4px; background: var(--surface-2); border: 1px solid var(--hair); border-radius: 10px; }
+  .filter-chip {
+    font-family: var(--ui); font-size: 12px; font-weight: 600;
+    color: var(--muted); padding: 6px 11px; border: 0; background: transparent;
+    border-radius: 7px; cursor: pointer; letter-spacing: .02em;
+    transition: background-color .18s var(--ease), color .18s var(--ease);
+  }
+  .filter-chip:hover { color: var(--ink); }
+  .filter-chip.active {
+    color: var(--accent); background: var(--accent-soft);
+  }
+
   /* TABS — segmented control */
   .tabs-row {
     display: flex; gap: 6px; margin: 26px 0 22px; padding: 6px;
@@ -513,6 +552,25 @@
     <section class="section wrap" id="scripts">
       <h2 class="h">Invasor Methods</h2>
       <div class="h-sub">Three categories. Pick a method, drill into its variants.</div>
+
+      <div class="script-filter-bar" id="scriptFilterBar">
+        <label class="filter-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="scriptSearch" type="text" placeholder="Search name, tag, feature..." autocomplete="off" spellcheck="false">
+          <kbd>Ctrl K</kbd>
+        </label>
+        <div class="filter-group" role="group" aria-label="Language">
+          <button class="filter-chip active" data-filter="lang" data-value="all">All</button>
+          <button class="filter-chip" data-filter="lang" data-value="RS">Rust</button>
+          <button class="filter-chip" data-filter="lang" data-value="C">C</button>
+        </div>
+        <div class="filter-group" role="group" aria-label="Status">
+          <button class="filter-chip active" data-filter="status" data-value="all">Any status</button>
+          <button class="filter-chip" data-filter="status" data-value="Updated">Updated</button>
+          <button class="filter-chip" data-filter="status" data-value="Working">Working</button>
+        </div>
+      </div>
+
       <div class="tabs-row" role="tablist" id="methodTabs">
         <button class="tab-btn" role="tab" aria-selected="true" data-panel="l7"><span>L7 Methods</span><span class="t-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span></button>
         <button class="tab-btn" role="tab" aria-selected="false" data-panel="l4"><span>L4 Methods</span><span class="t-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span></button>
@@ -640,6 +698,17 @@
 
   let SCRIPTS = EMBEDDED_SCRIPTS;
 
+  const filterState = { q: '', lang: 'all', status: 'all' };
+  function filterActive(){ return filterState.q.length > 0 || filterState.lang !== 'all' || filterState.status !== 'all'; }
+  function matchesFilter(s){
+    if (filterState.lang !== 'all' && s.lang !== filterState.lang) return false;
+    if (filterState.status !== 'all' && s.status !== filterState.status) return false;
+    const q = filterState.q.trim().toLowerCase();
+    if (!q) return true;
+    const hay = [s.name, s.tag, s.lang, s.id, ...(s.feats || [])].join(' ').toLowerCase();
+    return hay.includes(q);
+  }
+
   function arrowSvg(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`; }
   function activitySvg(){ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>`; }
 
@@ -650,9 +719,14 @@
   function langBadge(lang){ return `<span class="lang-badge" title="${lang}">${LANG_SVG[lang] || ''}</span>`; }
 
   function renderList(key, container){
-    const arr = SCRIPTS[key] || [];
+    const all = SCRIPTS[key] || [];
+    const arr = all.filter(matchesFilter);
     if (!arr.length){
-      container.innerHTML = `<div class="empty-note">No scripts in this category yet — drops are pushed weekly. <a href="#contact">get notified →</a></div>`;
+      if (filterActive() && all.length){
+        container.innerHTML = `<div class="empty-note">No methods match these filters — <a href="#" data-clear-filters>clear filters →</a></div>`;
+      } else {
+        container.innerHTML = `<div class="empty-note">No scripts in this category yet — drops are pushed weekly. <a href="#contact">get notified →</a></div>`;
+      }
       return;
     }
     container.innerHTML = arr.map((s, i) => {
@@ -696,7 +770,26 @@
     });
   }
 
-  function renderAll(){ document.querySelectorAll('.script-list').forEach(el => renderList(el.dataset.list, el)); }
+  function renderAll(){
+    document.querySelectorAll('.script-list').forEach(el => renderList(el.dataset.list, el));
+    if (filterActive()) {
+      document.querySelectorAll('.tab-panel.active .sub-acc').forEach(acc => {
+        if (acc.querySelector('.item')) acc.classList.add('open');
+      });
+    }
+  }
+
+  function resetFilters(){
+    filterState.q = '';
+    filterState.lang = 'all';
+    filterState.status = 'all';
+    const input = document.getElementById('scriptSearch');
+    if (input) input.value = '';
+    document.querySelectorAll('#scriptFilterBar .filter-chip').forEach(c => {
+      c.classList.toggle('active', c.dataset.value === 'all');
+    });
+    renderAll();
+  }
 
   // Fetch catalog from backend if available, otherwise use embedded data.
   (async function boot(){
@@ -708,6 +801,54 @@
       }
     } catch(e) { /* offline / file:// — embedded fallback */ }
     renderAll();
+  })();
+
+  // ============================================================
+  // FILTER WIRING (search + chips + Ctrl+K + sidebar pill)
+  // ============================================================
+  (function(){
+    const input = document.getElementById('scriptSearch');
+    const bar = document.getElementById('scriptFilterBar');
+    const scriptsSection = document.getElementById('scripts');
+
+    let qTimer;
+    input.addEventListener('input', () => {
+      clearTimeout(qTimer);
+      qTimer = setTimeout(() => { filterState.q = input.value; renderAll(); }, 90);
+    });
+
+    bar.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const group = chip.dataset.filter;
+        filterState[group] = chip.dataset.value;
+        bar.querySelectorAll(`.filter-chip[data-filter="${group}"]`).forEach(c => {
+          c.classList.toggle('active', c === chip);
+        });
+        renderAll();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const clear = e.target.closest('[data-clear-filters]');
+      if (clear) { e.preventDefault(); resetFilters(); }
+    });
+
+    function focusSearch(){
+      scriptsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => input.focus({ preventScroll: true }), 250);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const k = e.key.toLowerCase();
+      if ((e.ctrlKey || e.metaKey) && k === 'k') { e.preventDefault(); focusSearch(); }
+      else if (e.key === 'Escape' && document.activeElement === input) { input.blur(); }
+    });
+
+    const sidebarPill = document.querySelector('.sidebar-search');
+    if (sidebarPill) {
+      sidebarPill.style.cursor = 'pointer';
+      sidebarPill.addEventListener('click', focusSearch);
+    }
   })();
 
   // ============================================================
