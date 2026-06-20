@@ -361,6 +361,7 @@
   .sub-acc-head:hover { background: var(--bg-2); }
   .sub-acc.open .sub-acc-head { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
   .s-icon-l svg { width: 17px; height: 17px; stroke-width: 1.6; margin-right: 13px; color: var(--accent); }
+  .s-icon-l img { width: 20px; height: 20px; margin-right: 13px; object-fit: contain; border-radius: 4px; }
   .s-title { flex: 1; font-weight: 600; font-size: 15px; font-family: var(--ui); color: var(--ink); }
   .s-icon-r svg { width: 16px; height: 16px; stroke-width: 1.7; transition: transform 0.4s var(--ease); color: var(--muted); }
   .sub-acc.open .s-icon-r svg { transform: rotate(180deg); }
@@ -574,7 +575,7 @@
       <div class="tabs-row" role="tablist" id="methodTabs">
         <button class="tab-btn" role="tab" aria-selected="true" data-panel="l7"><span>L7 Methods</span><span class="t-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span></button>
         <button class="tab-btn" role="tab" aria-selected="false" data-panel="l4"><span>L4 Methods</span><span class="t-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span></button>
-        <button class="tab-btn" role="tab" aria-selected="false" data-panel="bypass"><span>Bypass Methods</span><span class="t-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span></button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-panel="bypass"><span>Custom Methods</span><span class="t-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span></button>
       </div>
 
       <div class="tab-panel active" data-panel="l7">
@@ -605,28 +606,20 @@
 
       <div class="tab-panel" data-panel="bypass">
         <div class="sub-acc">
-          <div class="sub-acc-head"><span class="s-icon-l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg></span><span class="s-title">Cloudflare</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
-          <div class="sub-acc-body"><div class="sub-acc-inner-main"><div class="script-list" data-list="bypass-cloudflare"></div></div></div>
-        </div>
-        <div class="sub-acc">
-          <div class="sub-acc-head"><span class="s-icon-l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg></span><span class="s-title">Akamai</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          <div class="sub-acc-head"><span class="s-icon-l"><img src="https://www.google.com/s2/favicons?domain=akamai.com&sz=64" alt="Akamai"></span><span class="s-title">Akamai</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
           <div class="sub-acc-body"><div class="sub-acc-inner-main"><div class="script-list" data-list="bypass-akamai"></div></div></div>
         </div>
         <div class="sub-acc">
-          <div class="sub-acc-head"><span class="s-icon-l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg></span><span class="s-title">Diamwall</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          <div class="sub-acc-head"><span class="s-icon-l"><img src="https://www.google.com/s2/favicons?domain=diamwall.ovh&sz=64" alt="Diamwall"></span><span class="s-title">Diamwall</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
           <div class="sub-acc-body"><div class="sub-acc-inner-main"><div class="script-list" data-list="bypass-diamwall"></div></div></div>
         </div>
         <div class="sub-acc">
-          <div class="sub-acc-head"><span class="s-icon-l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg></span><span class="s-title">DDoS-Guard</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          <div class="sub-acc-head"><span class="s-icon-l"><img src="https://www.google.com/s2/favicons?domain=ddos-guard.net&sz=64" alt="DDoS-Guard"></span><span class="s-title">DDoS-Guard</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
           <div class="sub-acc-body"><div class="sub-acc-inner-main"><div class="script-list" data-list="bypass-ddosguard"></div></div></div>
         </div>
         <div class="sub-acc">
-          <div class="sub-acc-head"><span class="s-icon-l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg></span><span class="s-title">Imperva</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
+          <div class="sub-acc-head"><span class="s-icon-l"><img src="https://www.google.com/s2/favicons?domain=imperva.com&sz=64" alt="Imperva"></span><span class="s-title">Imperva</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
           <div class="sub-acc-body"><div class="sub-acc-inner-main"><div class="script-list" data-list="bypass-imperva"></div></div></div>
-        </div>
-        <div class="sub-acc">
-          <div class="sub-acc-head"><span class="s-icon-l"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></svg></span><span class="s-title">Stormwall</span><span class="s-icon-r"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 9 6 6 6-6"/></svg></span></div>
-          <div class="sub-acc-body"><div class="sub-acc-inner-main"><div class="script-list" data-list="bypass-stormwall"></div></div></div>
         </div>
       </div>
     </section>
@@ -713,12 +706,10 @@
         ] },
     ],
     'l4-udp': [],
-    'bypass-cloudflare': [],
     'bypass-akamai': [],
     'bypass-diamwall': [],
     'bypass-ddosguard': [],
-    'bypass-imperva': [],
-    'bypass-stormwall': []
+    'bypass-imperva': []
   };
 
   let SCRIPTS = EMBEDDED_SCRIPTS;
