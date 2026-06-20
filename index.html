@@ -455,6 +455,209 @@
     .profile .pmeta { display: none; }
     .crumbs .crumb, .crumbs .sep { display: none; }
   }
+
+  /* ============================================================
+     LOGIN — top bar button + macOS-style modal
+     ============================================================ */
+  .login-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 999px;
+    background: var(--accent); color: var(--accent-ink);
+    border: 1px solid transparent; cursor: pointer;
+    font-family: var(--ui); font-size: 13px; font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    transition: transform .15s var(--ease-spring), box-shadow .2s var(--ease), opacity .2s var(--ease);
+  }
+  .login-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); opacity: .96; }
+  .login-btn:active { transform: translateY(0); }
+  .login-btn svg { width: 14px; height: 14px; stroke-width: 2; }
+
+  .session-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 4px 12px 4px 4px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--hair);
+    color: var(--ink); cursor: pointer;
+    font-family: var(--ui); font-size: 13px; font-weight: 600;
+    transition: background-color .2s var(--ease);
+  }
+  .session-pill:hover { background: var(--bg-2); }
+  .session-pill .avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: #fff; font-size: 11px; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), #b6440a);
+  }
+
+  /* macOS-style modal */
+  .login-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: grid; place-items: center;
+    background: rgba(20, 20, 24, 0.32);
+    backdrop-filter: blur(8px) saturate(140%);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    opacity: 0; pointer-events: none;
+    transition: opacity .28s var(--ease);
+  }
+  .login-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .login-modal {
+    width: min(440px, 92vw);
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+    box-shadow:
+      0 30px 90px rgba(0,0,0,0.28),
+      0 6px 18px rgba(0,0,0,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    overflow: hidden;
+    transform: translateY(14px) scale(.96);
+    opacity: 0;
+    transition: transform .35s var(--ease-spring), opacity .25s var(--ease);
+  }
+  .login-overlay.open .login-modal { transform: translateY(0) scale(1); opacity: 1; }
+
+  .login-titlebar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px;
+    background: linear-gradient(180deg, #f1f1f3 0%, #e7e7ea 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    user-select: none;
+  }
+  .login-traffic { display: flex; gap: 8px; align-items: center; }
+  .login-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 0; padding: 0; cursor: pointer;
+    position: relative;
+    box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.18);
+    transition: filter .15s var(--ease);
+  }
+  .login-dot.red { background: #ff5f57; }
+  .login-dot.yellow { background: #febc2e; }
+  .login-dot.green { background: #28c840; }
+  .login-traffic:hover .login-dot { filter: brightness(.95); }
+  .login-traffic .login-dot.red:hover::after,
+  .login-traffic .login-dot.yellow:hover::after,
+  .login-traffic .login-dot.green:hover::after {
+    content: "×"; position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-size: 11px; line-height: 1; color: rgba(0,0,0,0.55); font-weight: 700;
+  }
+  .login-dot.yellow:hover::after { content: "−"; }
+  .login-dot.green:hover::after { content: "+"; }
+
+  .login-titlebar-title {
+    flex: 1; text-align: center;
+    font-family: var(--ui); font-size: 12.5px; font-weight: 600;
+    color: #3a3a3c; letter-spacing: -0.01em;
+    margin-right: 56px;
+  }
+
+  .login-body { padding: 28px 28px 24px; }
+  .login-brand {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    margin-bottom: 22px;
+  }
+  .login-brand .logo {
+    width: 56px; height: 56px; border-radius: 14px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--accent), #b6440a);
+    color: #fff; font-family: var(--mono); font-weight: 700; font-size: 22px;
+    box-shadow: 0 6px 16px rgba(232,89,12,0.35);
+  }
+  .login-brand h3 {
+    margin: 8px 0 2px; font-family: var(--ui); font-size: 18px; font-weight: 600;
+    color: #1d1d1f; letter-spacing: -0.01em;
+  }
+  .login-brand p { margin: 0; font-size: 12.5px; color: #6e6e73; }
+
+  .login-field {
+    display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px;
+  }
+  .login-field label {
+    font-family: var(--ui); font-size: 11.5px; font-weight: 600;
+    color: #3a3a3c; letter-spacing: .02em;
+  }
+  .login-field input {
+    width: 100%; padding: 10px 12px;
+    border: 1px solid rgba(0,0,0,0.12); border-radius: 9px;
+    background: #fff; color: #1d1d1f;
+    font-family: var(--ui); font-size: 13.5px;
+    transition: border-color .15s var(--ease), box-shadow .15s var(--ease);
+  }
+  .login-field input::placeholder { color: #a1a1a6; }
+  .login-field input:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(232,89,12,0.18);
+  }
+
+  .login-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 4px 0 16px;
+  }
+  .login-check { display: inline-flex; align-items: center; gap: 7px; color: #3a3a3c; font-size: 12px; cursor: pointer; }
+  .login-check input { accent-color: var(--accent); }
+  .login-row a { font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 600; }
+  .login-row a:hover { text-decoration: underline; }
+
+  .login-submit {
+    width: 100%; padding: 11px 16px;
+    background: var(--accent); color: var(--accent-ink); font-weight: 600;
+    border: 0; border-radius: 10px; cursor: pointer;
+    font-family: var(--ui); font-size: 14px;
+    box-shadow: 0 4px 12px rgba(232,89,12,0.30);
+    transition: transform .15s var(--ease-spring), box-shadow .2s var(--ease), opacity .2s var(--ease);
+  }
+  .login-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(232,89,12,0.36); }
+  .login-submit:active { transform: translateY(0); }
+  .login-submit:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .login-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 18px 0; color: #8e8e93; font-size: 11px; font-weight: 600; letter-spacing: .08em;
+  }
+  .login-divider::before, .login-divider::after {
+    content: ""; flex: 1; height: 1px; background: rgba(0,0,0,0.08);
+  }
+
+  .login-social { display: flex; flex-direction: column; gap: 8px; }
+  .login-social button {
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    padding: 10px 12px;
+    background: #fff; border: 1px solid rgba(0,0,0,0.12); border-radius: 9px;
+    font-family: var(--ui); font-size: 13px; font-weight: 600;
+    color: #1d1d1f; cursor: pointer;
+    transition: background-color .15s var(--ease), border-color .15s var(--ease);
+  }
+  .login-social button:hover { background: #f5f5f7; }
+  .login-social svg { width: 16px; height: 16px; }
+
+  .login-foot {
+    text-align: center; margin-top: 18px;
+    font-size: 12px; color: #6e6e73;
+  }
+  .login-foot a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .login-foot a:hover { text-decoration: underline; }
+
+  .session-menu {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    min-width: 180px;
+    background: var(--paper); border: 1px solid var(--hair); border-radius: var(--radius);
+    box-shadow: var(--shadow-lg); padding: 6px;
+    opacity: 0; transform: translateY(-6px) scale(.97); transform-origin: top right;
+    pointer-events: none; transition: opacity .2s var(--ease), transform .2s var(--ease-spring);
+    z-index: 60;
+  }
+  .session-wrap { position: relative; }
+  .session-wrap.open .session-menu { opacity: 1; transform: none; pointer-events: auto; }
+  .session-menu .who { padding: 8px 10px 6px; font-size: 11px; color: var(--muted); }
+  .session-menu .who b { display: block; color: var(--ink); font-size: 12.5px; margin-top: 2px; }
+  .session-menu button {
+    width: 100%; text-align: left; padding: 9px 10px;
+    background: transparent; border: 0; border-radius: 7px;
+    font-family: var(--ui); font-size: 13px; color: var(--ink-soft); cursor: pointer;
+    transition: background-color .15s var(--ease);
+  }
+  .session-menu button:hover { background: var(--surface-2); color: var(--ink); }
 </style>
 </head>
 <body>
@@ -537,7 +740,22 @@
         <span class="sep">/</span>
         <span class="current" id="crumbCurrent">Overview</span>
       </nav>
-      <div class="topbar-right"></div>
+      <div class="topbar-right">
+        <div class="session-wrap" id="sessionWrap" hidden>
+          <button class="session-pill" id="sessionPill" aria-haspopup="menu" aria-expanded="false">
+            <span class="avatar" id="sessionAvatar">IN</span>
+            <span id="sessionName">guest</span>
+          </button>
+          <div class="session-menu" role="menu">
+            <div class="who">signed in as<b id="sessionWho">guest</b></div>
+            <button id="sessionLogout">Sign out</button>
+          </div>
+        </div>
+        <button class="login-btn" id="loginOpen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Login
+        </button>
+      </div>
     </header>
 
     <header class="hero wrap">
@@ -648,6 +866,54 @@
       <div style="display:flex; gap:18px;"><a href="#">[ status ]</a><a href="#">[ changelog ]</a></div>
     </footer>
   </main>
+</div>
+
+<!-- macOS-style login modal -->
+<div class="login-overlay" id="loginOverlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle" hidden>
+  <div class="login-modal" role="document">
+    <div class="login-titlebar">
+      <div class="login-traffic">
+        <button class="login-dot red" id="loginClose" aria-label="Close"></button>
+        <button class="login-dot yellow" aria-label="Minimize" disabled></button>
+        <button class="login-dot green" aria-label="Maximize" disabled></button>
+      </div>
+      <div class="login-titlebar-title" id="loginTitle">Sign in — Invasor Network</div>
+    </div>
+    <div class="login-body">
+      <div class="login-brand">
+        <div class="logo">IN</div>
+        <h3>Welcome back</h3>
+        <p>Sign in to access your scripts and methods.</p>
+      </div>
+      <form id="loginForm" autocomplete="off" novalidate>
+        <div class="login-field">
+          <label for="loginEmail">Email or username</label>
+          <input id="loginEmail" type="text" placeholder="you@example.com" required>
+        </div>
+        <div class="login-field">
+          <label for="loginPass">Password</label>
+          <input id="loginPass" type="password" placeholder="••••••••" required>
+        </div>
+        <div class="login-row">
+          <label class="login-check"><input type="checkbox" id="loginRemember" checked> Remember me</label>
+          <a href="#" tabindex="-1">Forgot password?</a>
+        </div>
+        <button type="submit" class="login-submit">Sign in</button>
+        <div class="login-divider">OR</div>
+        <div class="login-social">
+          <button type="button" data-social="discord">
+            <svg viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3a.077.077 0 0 0-.08.038c-.347.62-.732 1.425-1.002 2.06a18.27 18.27 0 0 0-5.486 0 12.51 12.51 0 0 0-1.017-2.06.08.08 0 0 0-.08-.038A19.74 19.74 0 0 0 5.135 4.37a.073.073 0 0 0-.033.027C1.578 9.59.667 14.66 1.105 19.66a.082.082 0 0 0 .03.056c2.052 1.508 4.04 2.422 5.992 3.029a.077.077 0 0 0 .084-.027c.462-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.105 13.07 13.07 0 0 1-1.87-.892.076.076 0 0 1-.008-.127c.126-.094.252-.192.371-.291a.075.075 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.062 0a.075.075 0 0 1 .078.01c.12.099.246.198.372.292a.076.076 0 0 1-.006.127c-.598.349-1.22.645-1.871.892a.077.077 0 0 0-.041.106c.36.698.771 1.363 1.225 1.994a.076.076 0 0 0 .084.027c1.961-.607 3.95-1.521 6-3.029a.077.077 0 0 0 .03-.054c.5-5.781-.838-10.81-3.549-15.265a.06.06 0 0 0-.031-.03zM8.02 16.61c-1.183 0-2.157-1.085-2.157-2.42 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.419 0 1.334-.955 2.419-2.157 2.419zm7.974 0c-1.183 0-2.157-1.085-2.157-2.42 0-1.333.955-2.418 2.157-2.418 1.211 0 2.176 1.094 2.157 2.419 0 1.334-.946 2.419-2.157 2.419z"/></svg>
+            Continue with Discord
+          </button>
+          <button type="button" data-social="telegram">
+            <svg viewBox="0 0 24 24" fill="#229ED9"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.643-.204-.657-.643.135-.953l11.566-4.458c.538-.196 1.006.128.832.938z"/></svg>
+            Continue with Telegram
+          </button>
+        </div>
+        <div class="login-foot">Don't have an account? <a href="#contact">Request access →</a></div>
+      </form>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1005,6 +1271,112 @@
       requestAnimationFrame(tick);
     }
     tick();
+  })();
+
+  // ============================================================
+  // LOGIN MODAL + SESSION
+  // ============================================================
+  (function(){
+    const SESSION_KEY = 'inv-session';
+    const overlay = document.getElementById('loginOverlay');
+    const openBtn = document.getElementById('loginOpen');
+    const closeBtn = document.getElementById('loginClose');
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('loginEmail');
+    const passInput = document.getElementById('loginPass');
+    const sessionWrap = document.getElementById('sessionWrap');
+    const sessionPill = document.getElementById('sessionPill');
+    const sessionName = document.getElementById('sessionName');
+    const sessionWho = document.getElementById('sessionWho');
+    const sessionAvatar = document.getElementById('sessionAvatar');
+    const sessionLogout = document.getElementById('sessionLogout');
+    const social = document.querySelectorAll('[data-social]');
+
+    function readSession(){
+      try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch(e){ return null; }
+    }
+    function writeSession(s){
+      try { s ? localStorage.setItem(SESSION_KEY, JSON.stringify(s)) : localStorage.removeItem(SESSION_KEY); } catch(e){}
+    }
+    function initials(name){
+      const parts = String(name).replace(/[^a-zA-Z0-9 ._-]/g,'').split(/[ ._-]+/).filter(Boolean);
+      return ((parts[0]?.[0] || '') + (parts[1]?.[0] || '')).toUpperCase() || (name[0] || 'U').toUpperCase();
+    }
+
+    function renderSession(){
+      const s = readSession();
+      if (s && s.name) {
+        openBtn.hidden = true;
+        sessionWrap.hidden = false;
+        sessionName.textContent = s.name;
+        sessionWho.textContent = s.name;
+        sessionAvatar.textContent = initials(s.name);
+      } else {
+        openBtn.hidden = false;
+        sessionWrap.hidden = true;
+        sessionWrap.classList.remove('open');
+      }
+    }
+
+    function openModal(){
+      overlay.hidden = false;
+      requestAnimationFrame(() => overlay.classList.add('open'));
+      setTimeout(() => emailInput.focus(), 200);
+    }
+    function closeModal(){
+      overlay.classList.remove('open');
+      setTimeout(() => { overlay.hidden = true; }, 280);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !overlay.hidden) closeModal();
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = emailInput.value.trim();
+      const pass = passInput.value;
+      if (!id || !pass) {
+        (id ? passInput : emailInput).focus();
+        return;
+      }
+      const name = id.includes('@') ? id.split('@')[0] : id;
+      writeSession({ name, via: 'password', at: Date.now() });
+      passInput.value = '';
+      renderSession();
+      closeModal();
+    });
+
+    social.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const via = btn.dataset.social;
+        const name = via === 'discord' ? 'Discord User' : 'Telegram User';
+        writeSession({ name, via, at: Date.now() });
+        renderSession();
+        closeModal();
+      });
+    });
+
+    sessionPill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = sessionWrap.classList.toggle('open');
+      sessionPill.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', (e) => {
+      if (!sessionWrap.contains(e.target)) {
+        sessionWrap.classList.remove('open');
+        sessionPill.setAttribute('aria-expanded', 'false');
+      }
+    });
+    sessionLogout.addEventListener('click', () => {
+      writeSession(null);
+      renderSession();
+    });
+
+    renderSession();
   })();
 
   // ============================================================
